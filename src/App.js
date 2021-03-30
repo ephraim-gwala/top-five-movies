@@ -12,7 +12,13 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch('top5MoviesAssessment.json')
+
+        fetch('top5MoviesAssessment.json', {
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(json => {
                 this.setState({
@@ -23,11 +29,18 @@ class App extends Component {
     }
 
     render() {
-        return (
-            <div className="App">
 
-            </div>
-        );
+        var {isLoaded} = this.state;
+
+        if(!isLoaded) {
+            return <div>Loading...</div>;
+        } else {
+            return (
+                <div className="App">
+                    Data is loaded
+                </div>
+            );
+        }
     }
 
 }
