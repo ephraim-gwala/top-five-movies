@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import '../App';
 import React from "react";
-import {BrowserRouter as Router, Link} from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useParams } from "react-router";
 
 const MovieDetail = (movie) => {
@@ -10,11 +10,15 @@ const MovieDetail = (movie) => {
     var params = useParams();
     var rank = parseInt(params.rank);
 
-    const singleMovie = movies.find(mov => mov.rank === rank)
-    console.log(singleMovie);
+    const singleMovie = movies.find(mov => mov.rank === rank);
 
         return (
             <div className="container my-5">
+                <div className="row">
+                    <div className="col-12">
+                        <p><Link to="/">Return to list of Movies</Link></p>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-12">
                         <div className="card mb-4">

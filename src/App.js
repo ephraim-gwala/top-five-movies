@@ -60,19 +60,17 @@ class App extends Component {
         }
 
         return (
-            <Router>
-                <Switch>
-                    <Route path="/" exact>
-                        <MovieList movies={this.state}/>
-                    </Route>
-                    <Route path="/movie/:rank" >
-                        <MovieDetail movie={this.state.movieItems}></MovieDetail>
-                    </Route>
+            <Switch>
+                <Route path="/" exact>
+                    <MovieList movies={this.state}/>
+                </Route>
+                <Route path="/movie/:rank" >
+                    <MovieDetail movie={this.state.movieItems}></MovieDetail>
+                </Route>
 
-                    {/* catch-all redirects to home */}
-                    <Route render={this._redirectToHome}/>
-                </Switch>
-            </Router>
+                {/* catch-all redirects to home */}
+                <Route render={this._redirectToHome}/>
+            </Switch>
         );
     }
 }
