@@ -24,10 +24,10 @@ const MovieDetail = (movie) => {
                         <div className="card mb-4">
                             <div className="card-body">
                                 <div className="row">
-                                    <div className="col-3">
+                                    <div className="col-12 col-sm-3">
                                         <img src={singleMovie.imageUrl} alt="" className="img-fluid"/>
                                     </div>
-                                    <div className="col-9">
+                                    <div className="col-12 col-sm-9">
                                         <h3>{singleMovie.title}</h3>
                                         <p><small>Rank: {singleMovie.rank}</small></p>
                                         <div>

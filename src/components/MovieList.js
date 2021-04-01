@@ -42,10 +42,10 @@ class MovieList extends Component {
 
                     <div className="container my-5">
                         <div className="row justify-content-between mb-3">
-                            <div className="col">
+                            <div className="col-12 col-sm">
                                 <h3>Top 5 Movies</h3>
                             </div>
-                            <div className="col-4">
+                            <div className="col-12 col-sm-4">
                                 <Form.Group controlId="exampleForm.ControlSelect1">
                                     <Form.Control as="select" onChange={handleSelect}>
                                         {sortItems.items.map(item => (
@@ -62,10 +62,10 @@ class MovieList extends Component {
                                         <div className="card mb-4">
                                             <div className="card-body">
                                                 <div className="row">
-                                                    <div className="col-3">
+                                                    <div className="col-12 col-sm-3 col-md-2">
                                                         <img src={item.imageUrl} alt="" className="img-fluid"/>
                                                     </div>
-                                                    <div className="col-9">
+                                                    <div className="col-12 col-sm-9 col-md-10">
                                                         <h3>{item.title}</h3>
                                                         <p><small>Rank: {item.rank}</small></p>
                                                     </div>
