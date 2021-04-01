@@ -1,7 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import React, {Component} from "react";
-import Form from 'react-bootstrap/Form';
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import MovieDetail from "./components/MovieDetail";
+import MovieList from "./components/MovieList";
 
 class App extends Component {
 
@@ -28,7 +30,13 @@ class App extends Component {
     componentDidMount() {
 
         fetch('top5MoviesAssessement.json')
-            .then(res => res.json())
+            .then(res => res.json(), {
+                headers : {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+
+            })
             .then(json => {
                 this.setState({
                     isLoaded: true,
@@ -36,78 +44,37 @@ class App extends Component {
                     movieItems: json.components[1],
                 })
             }).catch((err) => {
-                console.log(err);
-            });
+            console.log(err);
+        });
+    }
+
+    _redirectToHome() {
+        return <Redirect to="/" />;
     }
 
     render() {
-
-        var {isLoaded, movieItems, sortItems} = this.state;
-
-        const handleSelect=(e)=>{
-            let moviesSorted = movieItems.items;
-            let sortValue = e.target.value;
-
-            // let sort = (moviesToSort) => (key) => [...moviesToSort].sort((first, second) => first[key] > second[key]);
-            movieItems.items.sort(function(a,b){
-                return parseInt(a[sortValue])  - parseInt(b[sortValue]);
-            })
-            console.log(movieItems.items);
-            this.setState({
-                isOldestFirst: !this.state.isOldestFirst,
-                postList: moviesSorted
-            })
-        }
+        var {isLoaded} = this.state;
 
         if(!isLoaded) {
-            return <div>Loading...</div>;
-        } else {
-            return (
-                <div className="App">
-                    <div className="container my-5">
-                        <div className="row justify-content-between mb-3">
-                            <div className="col">
-                                <h3>Top 5 Movies</h3>
-                            </div>
-                            <div className="col col-auto">
-                                <Form.Group controlId="exampleForm.ControlSelect1">
-                                    <Form.Label>Sort by...</Form.Label>
-                                    <Form.Control as="select" onChange={handleSelect}>
-                                        {sortItems.items.map(item => (
-                                            <option key={item.id} value={item.valueToOrderBy}>{item.label}</option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-12">
-                                    {movieItems.items.map(item => (
-                                        <div className="card mb-4" key={item.id}>
-                                            <div className="card-body">
-                                                <div className="row">
-                                                    <div className="col-3">
-                                                        <img src={ item.imageUrl } alt="" className="img-fluid"/>
-                                                    </div>
-                                                    <div className="col-9">
-                                                        <h3>{ item.title }</h3>
-                                                        <button className="btn btn-primary">Read synopsis</button>
-                                                        <p className="mb-0"><small>Rank: { item.rank }</small></p>
-                                                        <p>{ item.synopsis }</p>
-                                                        <p><i>(Release Year: { item.releaseDate })</i></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
+            return (<div>Loading...</div>);
         }
-    }
 
+        return (
+            <Router>
+                <Switch>
+                    <Route path="/" exact>
+                        <MovieList movies={this.state}/>
+                    </Route>
+                    <Route path="/movie/:rank" >
+                        <MovieDetail movie={this.state.movieItems}></MovieDetail>
+                    </Route>
+
+                    {/* catch-all redirects to home */}
+                    <Route render={this._redirectToHome}/>
+                </Switch>
+            </Router>
+        );
+    }
 }
 
 export default App;
